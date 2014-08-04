@@ -67,8 +67,8 @@ class CkeditorTest < ActiveSupport::TestCase
 
     assert_equal Ckeditor.assets.include?('ckeditor/lang/ru.js'), false
     assert_equal Ckeditor.assets.include?('ckeditor/lang/uk.js'), true
-    assert_equal Ckeditor.assets.include?('ckeditor/plugins/a11yhelp/dialogs/lang/bg.js'), false
-    assert_equal Ckeditor.assets.include?('ckeditor/plugins/a11yhelp/dialogs/lang/uk.js'), true
+    assert_equal Ckeditor.assets.include?('ckeditor/plugins/a11yhelp/lang/bg.js'), false
+    assert_equal Ckeditor.assets.include?('ckeditor/plugins/a11yhelp/lang/uk.js'), true
   end
 
   test 'plugins ingnore list' do
