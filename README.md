@@ -32,7 +32,7 @@ gem 'ckeditor', github: 'galetahub/ckeditor'
 For file upload support, you must generate the necessary file storage models.
 The currently supported backends are:
 
-* ActiveRecord (paperclip, carrierwave, dragonfly, refile)
+* ActiveRecord (paperclip, carrierwave, dragonfly)
 * Mongoid (paperclip, carrierwave, dragonfly)
 
 ### How to generate models to store uploaded files
@@ -109,7 +109,7 @@ mount Ckeditor::Engine => '/ckeditor'
 
 ## Usage
 
-### Load editor from gem vendor
+### Load editor from gem vendor:
 
 Include ckeditor javascripts in your `app/assets/javascripts/application.js`:
 
@@ -126,7 +126,7 @@ Setup editor version to load (more info here http://cdn.ckeditor.com/)
 
 Ckeditor.setup do |config|
   # //cdn.ckeditor.com/<version.number>/<distribution>/ckeditor.js
-  config.cdn_url = "//cdn.ckeditor.com/4.5.9/standard/ckeditor.js"
+  config.cdn_url = "//cdn.ckeditor.com/4.5.6/standard/ckeditor.js"
 end
 ```
 
@@ -178,7 +178,7 @@ CKEDITOR.editorConfig = function (config) {
 
 When overriding the default `config.js` file, you must set all configuration options yourself as the bundled `config.js` will not be loaded. To see the default configuration, run `bundle open ckeditor`, copy `app/assets/javascripts/ckeditor/config.js` into your project and customize it to your needs.
 
-### Deployment (only if you use ckeditor from gem vendor)
+### Deployment
 
 For Rails 4, add the following to `config/initializers/assets.rb`:
 
@@ -293,17 +293,6 @@ app/policies/ckeditor/attachment_file_policy.rb
 By default, only the user that logged in can access the models (with actions *index* and *create*) and only the owner of the asset can **destroy** the resource.
 
 You can customize these two policy files as you like.
-
-## Engine configuration
- * To override the default CKEditor routes create a [config.js](https://github.com/galetahub/ckeditor/blob/master/app/assets/javascripts/ckeditor/config.js) file within the host application at `app/assets/javascripts/ckeditor/config.js`
- * To override the default parent controller
-```
-# in config/initializers/ckeditor.rb
-
-Ckeditor.setup do |config|
-  config.parent_controller = 'MyController'
-end
-```
 
 ## I18n
 
