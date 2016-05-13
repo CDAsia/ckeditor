@@ -40,7 +40,7 @@ gem 'ckeditor', '4.0.4'
 For file upload support, you must generate the necessary file storage models.
 The currently supported backends are:
 
-* ActiveRecord (paperclip, carrierwave, dragonfly)
+* ActiveRecord (paperclip, carrierwave, dragonfly, refile)
 * Mongoid (paperclip, carrierwave, dragonfly)
 
 ### How to generate models to store uploaded files
