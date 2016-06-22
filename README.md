@@ -8,7 +8,7 @@ CKEditor is a WYSIWYG text editor designed to simplify web content creation. It 
 
 ## Features
 
-* Ckeditor version 4.4.7 (full 27 Jan 2015)
+* Ckeditor version 4.5.6 (9 Dec 2015)
 * Rails 4 integration
 * Files browser
 * HTML5 file uploader
@@ -27,14 +27,6 @@ or if you'd like to use the latest version from Github:
 
 ```
 gem 'ckeditor', github: 'galetahub/ckeditor'
-```
-
-#### Using with ruby 1.8.7
-
-For usage with ruby 1.8.7 you need to specify the gem version:
-
-```
-gem 'ckeditor', '4.0.4'
 ```
 
 For file upload support, you must generate the necessary file storage models.
@@ -72,7 +64,6 @@ gem 'refile-mini_magick'
 
 rails generate ckeditor:install --orm=active_record --backend=refile
 ```
-
 
 #### ActiveRecord + dragonfly
 
@@ -118,24 +109,40 @@ mount Ckeditor::Engine => '/ckeditor'
 
 ## Usage
 
+### Load editor from gem vendor
+
 Include ckeditor javascripts in your `app/assets/javascripts/application.js`:
 
 ```
 //= require ckeditor/init
 ```
 
-Form helpers:
+### Load editor via CKEditor CDN
 
-```erb
-<%= form_for @page do |form| -%>
-  ...
-  <%= form.cktext_area :notes, :class => 'someclass', :ckeditor => {:language => 'uk'} %>
-  ...
-  <%= form.cktext_area :content, :value => 'Default value', :id => 'sometext' %>
-  ...
-  <%= cktext_area :page, :info, :cols => 40, :ckeditor => {:uiColor => '#AADC6E', :toolbar => 'mini'} %>
-  ...
-<% end -%>
+Setup editor version to load (more info here http://cdn.ckeditor.com/)
+
+```ruby
+# in config/initializers/ckeditor.rb
+
+Ckeditor.setup do |config|
+  # //cdn.ckeditor.com/<version.number>/<distribution>/ckeditor.js
+  config.cdn_url = "//cdn.ckeditor.com/4.5.9/standard/ckeditor.js"
+end
+```
+
+In view template include ckeditor CDN:
+
+```slim
+= javascript_include_tag Ckeditor.cdn_url
+```
+
+### Form helpers
+
+```slim
+= form_for @page do |form|
+  = form.cktext_area :notes, :class => 'someclass', :ckeditor => {:language => 'uk'}
+  = form.cktext_area :content, :value => 'Default value', :id => 'sometext'  
+  = cktext_area :page, :info, :cols => 40, :ckeditor => {:uiColor => '#AADC6E', :toolbar => 'mini'}
 ```
 
 ### Customize ckeditor
@@ -171,7 +178,7 @@ CKEDITOR.editorConfig = function (config) {
 
 When overriding the default `config.js` file, you must set all configuration options yourself as the bundled `config.js` will not be loaded. To see the default configuration, run `bundle open ckeditor`, copy `app/assets/javascripts/ckeditor/config.js` into your project and customize it to your needs.
 
-### Deployment
+### Deployment (only if you use ckeditor from gem vendor)
 
 For Rails 4, add the following to `config/initializers/assets.rb`:
 
@@ -229,15 +236,15 @@ jQuery sample:
 
 ### Formtastic integration
 
-```erb
-<%= form.input :content, :as => :ckeditor %>
-<%= form.input :content, :as => :ckeditor, :input_html => { :ckeditor => { :height => 400 } } %>
+```slim
+= form.input :content, :as => :ckeditor
+= form.input :content, :as => :ckeditor, :input_html => { :ckeditor => { :height => 400 } }
 ```
 
 ### SimpleForm integration
 
-```erb
-<%= form.input :content, :as => :ckeditor, :input_html => { :ckeditor => {:toolbar => 'Full'} } %>
+```slim
+= form.input :content, :as => :ckeditor, :input_html => { :ckeditor => {:toolbar => 'Full'} }
 ```
 
 ### CanCan integration
